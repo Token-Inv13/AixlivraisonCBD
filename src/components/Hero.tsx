@@ -6,10 +6,7 @@ type HeroProps = {
 
 export function Hero({ onRequestDelivery, onSeeProducts, whatsappHref }: HeroProps) {
   return (
-    <section
-      id="accueil"
-      className="relative overflow-hidden border-b border-white/8"
-    >
+    <section id="accueil" className="relative overflow-hidden border-b border-white/8">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,105,63,0.32),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(212,176,106,0.16),_transparent_26%),linear-gradient(180deg,_#07100e_0%,_#081412_100%)]" />
       <div className="relative mx-auto grid min-h-[calc(100svh-84px)] w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-8 lg:py-20">
         <div className="max-w-3xl">
@@ -21,7 +18,8 @@ export function Hero({ onRequestDelivery, onSeeProducts, whatsappHref }: HeroPro
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">
             Service local indépendant de livraison CBD, disponible en journée,
-            soirée et nuit selon disponibilité.
+            soirée et nuit. Les tarifs varient selon la zone, le créneau et le
+            jour de livraison.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
@@ -90,7 +88,7 @@ export function Hero({ onRequestDelivery, onSeeProducts, whatsappHref }: HeroPro
                 Journée, soirée, nuit
               </p>
               <p className="mt-1 text-sm text-white/58">
-                Selon disponibilité du créneau demandé.
+                Les tarifs varient selon la semaine ou le week-end.
               </p>
             </div>
             <div className="rounded-[24px] border border-white/8 bg-[#0d1715]/88 p-4">
@@ -110,4 +108,3 @@ export function Hero({ onRequestDelivery, onSeeProducts, whatsappHref }: HeroPro
     </section>
   )
 }
-

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Product } from '../data/products'
+import { deliveryDayTypes } from '../data/siteContent'
 
 type DeliveryFormProps = {
   products: Product[]
@@ -16,6 +17,7 @@ type FormState = {
   address: string
   neighborhood: string
   slot: string
+  deliveryDayType: string
   productId: string
   formatLabel: string
   additionalProduct: string
@@ -29,6 +31,7 @@ const defaultState: FormState = {
   address: '',
   neighborhood: '',
   slot: 'Journée',
+  deliveryDayType: 'Je ne sais pas encore',
   productId: '',
   formatLabel: '',
   additionalProduct: '',
@@ -73,6 +76,7 @@ export function DeliveryForm({
       `Adresse: ${form.address || 'à compléter'}`,
       `Quartier: ${form.neighborhood || 'à compléter'}`,
       `Créneau souhaité: ${form.slot}`,
+      `Type de créneau: ${form.deliveryDayType}`,
       `Produit souhaité: ${selectedProduct?.name || form.productId || 'à choisir'}`,
       `Format souhaité: ${currentFormat?.label || effectiveFormatLabel || 'à choisir'}`,
       `Produit supplémentaire: ${form.additionalProduct || 'aucun'}`,
@@ -154,6 +158,14 @@ export function DeliveryForm({
                   options={['Journée', 'Soirée', 'Nuit']}
                   onChange={(value) =>
                     setForm((current) => ({ ...current, slot: value }))
+                  }
+                />
+                <SelectField
+                  label="Type de créneau"
+                  value={form.deliveryDayType}
+                  options={deliveryDayTypes}
+                  onChange={(value) =>
+                    setForm((current) => ({ ...current, deliveryDayType: value }))
                   }
                 />
                 <SelectField
@@ -257,6 +269,7 @@ export function DeliveryForm({
                 />
                 <Row label="Mode" value={form.contactMethod} />
                 <Row label="Créneau" value={form.slot} />
+                <Row label="Jour" value={form.deliveryDayType} />
               </div>
             </div>
 
