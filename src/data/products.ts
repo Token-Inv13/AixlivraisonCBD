@@ -21,14 +21,14 @@ export const products: Product[] = [
     category: 'Fleur CBD premium',
     gamme: 'Californienne',
     summary:
-      'Produit premium positionné sur une qualité supérieure. Disponibilité à confirmer.',
+      'Produit premium positionné sur une qualité supérieure. Disponibilité à confirmer avant validation.',
     formats: [
       { label: '2g', price: 16 },
       { label: '5g', price: 40 },
       { label: '10g', price: 80 },
       { label: '25g', price: 175 },
     ],
-    note: 'Disponibilité et prix final confirmés avant validation',
+    note: 'Disponibilité confirmée manuellement avant validation',
     imageLabel: 'Fleur premium',
   },
   {
@@ -37,14 +37,14 @@ export const products: Product[] = [
     category: 'Fleur CBD',
     gamme: 'Strong',
     summary:
-      'Produit accessible avec bon rapport quantité/prix. Produit puissant, déconseillé aux débutants.',
+      'Produit accessible avec bon rapport quantité/prix. Produit puissant, déconseillé aux débutants selon la fiche fournisseur. Disponibilité à confirmer.',
     formats: [
       { label: '2g', price: 12 },
       { label: '5g', price: 30 },
       { label: '10g', price: 60 },
       { label: '25g', price: 125 },
     ],
-    note: 'Disponibilité et prix final confirmés avant validation',
+    note: 'Disponibilité confirmée manuellement avant validation',
     imageLabel: 'Fleur strong',
   },
   {
@@ -53,14 +53,14 @@ export const products: Product[] = [
     category: 'Résine CBD / premium',
     gamme: 'Strong',
     summary:
-      'Produit premium au profil plus intense. Produit puissant, déconseillé aux débutants.',
+      'Produit premium au profil plus intense. Produit puissant, déconseillé aux débutants selon la fiche fournisseur. Disponibilité à confirmer.',
     formats: [
       { label: '2g', price: 20 },
       { label: '5g', price: 50 },
       { label: '10g', price: 100 },
       { label: '25g', price: 225 },
     ],
-    note: 'Disponibilité et prix final confirmés avant validation',
+    note: 'Disponibilité confirmée manuellement avant validation',
     imageLabel: 'Résine premium',
   },
   {
@@ -69,26 +69,25 @@ export const products: Product[] = [
     category: 'Résine CBD',
     gamme: 'Soft',
     summary:
-      'Résine plus douce et accessible, adaptée à une demande plus légère.',
+      'Résine plus douce et accessible, adaptée à une demande plus légère. Disponibilité à confirmer.',
     formats: [
       { label: '2g', price: 10 },
       { label: '5g', price: 25 },
       { label: '10g', price: 50 },
       { label: '25g', price: 125 },
     ],
-    note: 'Disponibilité et prix final confirmés avant validation',
+    note: 'Disponibilité confirmée manuellement avant validation',
     imageLabel: 'Résine soft',
   },
   {
     id: 'aimant-raw',
     name: 'Aimant RAW',
     category: 'Accessoire',
-    gamme: 'Accessoire',
+    gamme: 'Standard',
     summary:
-      'Accessoire simple pouvant être ajouté à une demande de livraison.',
+      'Accessoire simple pouvant être ajouté à une demande de livraison. Disponibilité à confirmer.',
     formats: [{ label: '1 unité', price: 4 }],
-    note: 'Disponibilité et prix final confirmés avant validation',
+    note: 'Disponibilité confirmée manuellement avant validation',
     imageLabel: 'Accessoire',
   },
 ]
-
