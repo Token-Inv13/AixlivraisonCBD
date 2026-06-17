@@ -20,6 +20,12 @@ export const deliveryDayTypes = [
   'Je ne sais pas encore',
 ]
 
+export const deliveryZones = [
+  'Aix centre',
+  'Quartiers proches',
+  'Hors Aix proche',
+]
+
 export const pricingSections = [
   {
     title: 'Tarifs semaine',

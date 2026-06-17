@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { Product } from '../data/products'
-import { deliveryDayTypes } from '../data/siteContent'
+import { deliveryDayTypes, deliveryZones } from '../data/siteContent'
 
 type DeliveryFormProps = {
   products: Product[]
@@ -18,11 +18,20 @@ type FormState = {
   neighborhood: string
   slot: string
   deliveryDayType: string
+  deliveryZone: string
+  deliveryUrgency: string
   productId: string
   formatLabel: string
   additionalProduct: string
   contactMethod: 'WhatsApp' | 'SMS' | 'Telegram'
   message: string
+}
+
+type DeliveryEstimate = {
+  amount: number | null
+  label: string
+  exact: boolean
+  detail: string
 }
 
 const defaultState: FormState = {
@@ -31,12 +40,73 @@ const defaultState: FormState = {
   address: '',
   neighborhood: '',
   slot: 'Journée',
-  deliveryDayType: 'Je ne sais pas encore',
+  deliveryDayType: 'Semaine',
+  deliveryZone: 'Aix centre',
+  deliveryUrgency: 'Standard',
   productId: '',
   formatLabel: '',
   additionalProduct: '',
   contactMethod: 'WhatsApp',
   message: '',
+}
+
+const deliveryPrices = {
+  Semaine: {
+    'Aix centre': { Journée: 6, Soirée: 10, Nuit: 15 },
+    'Quartiers proches': { Journée: 8, Soirée: 12, Nuit: 18 },
+  },
+  'Week-end': {
+    'Aix centre': { Journée: 8, Soirée: 13, Nuit: 20 },
+    'Quartiers proches': { Journée: 10, Soirée: 15, Nuit: 23 },
+  },
+} as const
+
+const urgentSupplement = 5
+
+function formatEuro(value: number) {
+  return `${value} €`
+}
+
+function getDeliveryEstimate(
+  deliveryDayType: string,
+  deliveryZone: string,
+  slot: string,
+  deliveryUrgency: string,
+): DeliveryEstimate {
+  if (deliveryZone === 'Hors Aix proche') {
+    return {
+      amount: null,
+      label: 'Sur estimation',
+      exact: false,
+      detail: 'Zone hors Aix proche: tarif confirmé manuellement avant validation',
+    }
+  }
+
+  const dayTable =
+    deliveryPrices[deliveryDayType as keyof typeof deliveryPrices] ?? null
+  const zoneTable = dayTable?.[deliveryZone as 'Aix centre' | 'Quartiers proches']
+  const basePrice = zoneTable?.[slot as 'Journée' | 'Soirée' | 'Nuit'] ?? null
+
+  if (basePrice == null) {
+    return {
+      amount: null,
+      label: 'À confirmer',
+      exact: false,
+      detail: 'Sélection tarifaire incomplète',
+    }
+  }
+
+  const total = basePrice + (deliveryUrgency === 'Urgente' ? urgentSupplement : 0)
+
+  return {
+    amount: total,
+    label: formatEuro(total),
+    exact: true,
+    detail:
+      deliveryUrgency === 'Urgente'
+        ? `${formatEuro(basePrice)} + urgence ${formatEuro(urgentSupplement)}`
+        : `${formatEuro(basePrice)}`,
+  }
 }
 
 export function DeliveryForm({
@@ -67,10 +137,24 @@ export function DeliveryForm({
     availableFormats.find((item) => item.label === form.formatLabel)?.label ??
     availableFormats[0]?.label ??
     form.formatLabel
-  const productPriceLabel = currentFormat
-    ? `${currentFormat.price} €`
-    : 'à confirmer'
-  const deliveryCostLabel = 'selon zone, jour et créneau'
+
+  const productPrice = currentFormat?.price ?? null
+  const deliveryEstimate = getDeliveryEstimate(
+    form.deliveryDayType,
+    form.deliveryZone,
+    form.slot,
+    form.deliveryUrgency,
+  )
+  const totalEstimate =
+    productPrice != null && deliveryEstimate.amount != null
+      ? productPrice + deliveryEstimate.amount
+      : null
+
+  const productPriceLabel =
+    productPrice != null ? formatEuro(productPrice) : 'À confirmer'
+  const deliveryCostLabel = deliveryEstimate.label
+  const totalEstimateLabel =
+    totalEstimate != null ? formatEuro(totalEstimate) : 'À confirmer'
 
   const generateMessage = () => {
     const lines = [
@@ -79,8 +163,10 @@ export function DeliveryForm({
       `Téléphone: ${form.phone || 'à compléter'}`,
       `Adresse: ${form.address || 'à compléter'}`,
       `Quartier: ${form.neighborhood || 'à compléter'}`,
+      `Zone de livraison: ${form.deliveryZone}`,
       `Créneau souhaité: ${form.slot}`,
       `Type de créneau: ${form.deliveryDayType}`,
+      `Livraison urgente: ${form.deliveryUrgency}`,
       `Produit souhaité: ${selectedProduct?.name || form.productId || 'à choisir'}`,
       `Format souhaité: ${currentFormat?.label || effectiveFormatLabel || 'à choisir'}`,
       `Produit supplémentaire: ${form.additionalProduct || 'aucun'}`,
@@ -88,6 +174,7 @@ export function DeliveryForm({
       `Message complémentaire: ${form.message || 'aucun'}`,
       `Prix produit: ${productPriceLabel}`,
       `Coût livraison: ${deliveryCostLabel}`,
+      `Total estimé: ${totalEstimateLabel}`,
       '',
       'Note: disponibilité et prix final à confirmer manuellement avant validation.',
     ]
@@ -120,8 +207,8 @@ export function DeliveryForm({
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-white/68">
               Le formulaire prépare un message de confirmation local avec les
-              informations utiles. La disponibilité, le prix final et le
-              créneau restent confirmés avant validation.
+              informations utiles. Le prix du produit, le coût de livraison et
+              le total estimé s’adaptent aux sélections avant validation.
             </p>
 
             <form
@@ -159,6 +246,14 @@ export function DeliveryForm({
                   }
                 />
                 <SelectField
+                  label="Zone de livraison"
+                  value={form.deliveryZone}
+                  options={deliveryZones}
+                  onChange={(value) =>
+                    setForm((current) => ({ ...current, deliveryZone: value }))
+                  }
+                />
+                <SelectField
                   label="Créneau souhaité"
                   value={form.slot}
                   options={['Journée', 'Soirée', 'Nuit']}
@@ -172,6 +267,14 @@ export function DeliveryForm({
                   options={deliveryDayTypes}
                   onChange={(value) =>
                     setForm((current) => ({ ...current, deliveryDayType: value }))
+                  }
+                />
+                <SelectField
+                  label="Livraison urgente"
+                  value={form.deliveryUrgency}
+                  options={['Standard', 'Urgente']}
+                  onChange={(value) =>
+                    setForm((current) => ({ ...current, deliveryUrgency: value }))
                   }
                 />
                 <SelectField
@@ -231,6 +334,21 @@ export function DeliveryForm({
                 />
               </div>
 
+              <div className="mt-5 rounded-[28px] border border-white/8 bg-slate-950/25 p-4">
+                <p className="text-xs uppercase tracking-[0.24em] text-white/42">
+                  Estimation immédiate
+                </p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  <PriceTile label="Prix produit" value={productPriceLabel} />
+                  <PriceTile label="Coût livraison" value={deliveryCostLabel} />
+                  <PriceTile label="Total estimé" value={totalEstimateLabel} />
+                </div>
+                <p className="mt-3 text-xs leading-5 text-white/52">
+                  {deliveryEstimate.detail}. La disponibilité et le tarif final
+                  restent confirmés avant validation.
+                </p>
+              </div>
+
               <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                 <button
                   type="submit"
@@ -275,6 +393,9 @@ export function DeliveryForm({
                 />
                 <Row label="Prix produit" value={productPriceLabel} />
                 <Row label="Coût livraison" value={deliveryCostLabel} />
+                <Row label="Total estimé" value={totalEstimateLabel} />
+                <Row label="Zone" value={form.deliveryZone} />
+                <Row label="Urgence" value={form.deliveryUrgency} />
                 <Row label="Mode" value={form.contactMethod} />
                 <Row label="Créneau" value={form.slot} />
                 <Row label="Jour" value={form.deliveryDayType} />
@@ -307,6 +428,17 @@ export function DeliveryForm({
         </div>
       </div>
     </section>
+  )
+}
+
+function PriceTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3">
+      <p className="text-[11px] uppercase tracking-[0.22em] text-white/42">
+        {label}
+      </p>
+      <p className="mt-1 text-sm font-semibold text-[#f7f3e8]">{value}</p>
+    </div>
   )
 }
 
