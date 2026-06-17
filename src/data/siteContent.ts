@@ -1,5 +1,3 @@
-export const isDemoContact = true
-
 export const navItems = [
   { label: 'Accueil', href: '#accueil' },
   { label: 'Produits', href: '#produits' },
@@ -76,8 +74,3 @@ export const serviceAreas = [
   'Quartiers proches sur validation',
   'Hors Aix proche sur estimation',
 ]
-
-export const contactLabels = {
-  whatsapp: 'numéro à définir',
-  email: 'contact à définir',
-}

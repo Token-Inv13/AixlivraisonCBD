@@ -1,5 +1,3 @@
-import { contactLabels } from '../data/siteContent'
-
 export function Footer() {
   return (
     <footer id="contact" className="bg-[#07100e] px-4 py-16 sm:px-6 lg:px-8">
@@ -9,15 +7,11 @@ export function Footer() {
             Contact
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-[#f4efe1]">
-            Présenter le projet à un fournisseur potentiel
+            Nous contacter
           </h2>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-white/66">
-            Cette maquette reste volontairement prudente: elle présente un
-            service indépendant, des produits disponibles sur demande et une
-            confirmation manuelle avant validation.
-          </p>
-          <p className="mt-4 text-sm text-emerald-100/60">
-            Coordonnées provisoires pour maquette.
+            Choisissez le canal le plus pratique pour une demande de livraison
+            ou une question sur les produits et les créneaux disponibles.
           </p>
         </div>
 
@@ -28,20 +22,20 @@ export function Footer() {
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-full bg-[#d4b06a] px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#e2bf7a]"
           >
-            WhatsApp: {contactLabels.whatsapp}
+            Contacter par WhatsApp
           </a>
           <a
             href="mailto:contact@exemple.local"
             className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
           >
-            Email: {contactLabels.email}
+            Envoyer un email
           </a>
         </div>
       </div>
 
       <div className="mx-auto mt-10 flex w-full max-w-7xl flex-col gap-4 border-t border-white/8 pt-6 text-xs text-white/42 sm:flex-row sm:items-center sm:justify-between">
-        <span>Aix livraison CBD — Maquette de présentation</span>
-        <span>Service indépendant, sans paiement en ligne, sans commande automatique</span>
+        <span>Aix livraison CBD — Service de livraison local à Aix-en-Provence</span>
+        <span>Sans paiement en ligne, sans commande automatique</span>
       </div>
     </footer>
   )

@@ -6,7 +6,7 @@ import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { PricingTable } from './components/PricingTable'
 import { ProductCard } from './components/ProductCard'
-import { conditions, isDemoContact, serviceAreas } from './data/siteContent'
+import { conditions, serviceAreas } from './data/siteContent'
 import { products } from './data/products'
 
 const whatsappBaseUrl = 'https://wa.me/0000000000'
@@ -196,29 +196,6 @@ function App() {
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="border-b border-white/8 bg-[#081311]">
-            <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-              <div className="rounded-[28px] border border-white/10 bg-white/6 p-6">
-                <p className="text-sm uppercase tracking-[0.3em] text-emerald-100/55">
-                  Projet de partenariat local
-                </p>
-                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-[#f4efe1] sm:text-3xl">
-                  Présentation partenaire
-                </h2>
-                <p className="mt-4 max-w-4xl text-sm leading-7 text-white/68">
-                  Cette maquette présente un concept de service indépendant de
-                  livraison locale. L’objectif est de tester la demande à
-                  Aix-en-Provence avec une sélection limitée de produits, sans
-                  imposer de gestion logistique complexe à la boutique
-                  partenaire.
-                </p>
-                <p className="mt-4 text-sm text-emerald-100/60">
-                  Coordonnées de maquette: {isDemoContact ? 'actives en mode démonstration' : 'à confirmer'}
-                </p>
               </div>
             </div>
           </section>
