@@ -67,6 +67,10 @@ export function DeliveryForm({
     availableFormats.find((item) => item.label === form.formatLabel)?.label ??
     availableFormats[0]?.label ??
     form.formatLabel
+  const productPriceLabel = currentFormat
+    ? `${currentFormat.price} €`
+    : 'à confirmer'
+  const deliveryCostLabel = 'selon zone, jour et créneau'
 
   const generateMessage = () => {
     const lines = [
@@ -82,6 +86,8 @@ export function DeliveryForm({
       `Produit supplémentaire: ${form.additionalProduct || 'aucun'}`,
       `Mode de contact préféré: ${form.contactMethod}`,
       `Message complémentaire: ${form.message || 'aucun'}`,
+      `Prix produit: ${productPriceLabel}`,
+      `Coût livraison: ${deliveryCostLabel}`,
       '',
       'Note: disponibilité et prix final à confirmer manuellement avant validation.',
     ]
@@ -267,6 +273,8 @@ export function DeliveryForm({
                   label="Format"
                   value={currentFormat?.label ?? effectiveFormatLabel ?? 'À confirmer'}
                 />
+                <Row label="Prix produit" value={productPriceLabel} />
+                <Row label="Coût livraison" value={deliveryCostLabel} />
                 <Row label="Mode" value={form.contactMethod} />
                 <Row label="Créneau" value={form.slot} />
                 <Row label="Jour" value={form.deliveryDayType} />

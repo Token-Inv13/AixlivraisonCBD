@@ -92,9 +92,10 @@ function App() {
                   </h2>
                 </div>
                 <p className="max-w-2xl text-sm leading-7 text-white/64">
-                  Chaque carte affiche une base de prix, les formats disponibles
-                  et un bouton de demande directe. Les produits et tarifs
-                  restent indicatifs avant confirmation.
+                  Chaque carte affiche séparément le prix produit et le coût de
+                  livraison, avec les formats disponibles et un bouton de
+                  demande directe. Les produits et tarifs restent indicatifs
+                  avant confirmation.
                 </p>
               </div>
 

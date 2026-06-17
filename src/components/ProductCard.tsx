@@ -43,20 +43,29 @@ export function ProductCard({ product, onRequestProduct }: ProductCardProps) {
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-white/8 bg-slate-950/25 p-4">
             <p className="text-xs uppercase tracking-[0.2em] text-white/42">
-              Gamme
+              Prix produit
             </p>
             <p className="mt-1 text-sm font-medium text-white/84">
-              {product.gamme}
+              À partir de {cheapest} €
             </p>
           </div>
           <div className="rounded-2xl border border-white/8 bg-slate-950/25 p-4">
             <p className="text-xs uppercase tracking-[0.2em] text-white/42">
-              Prix à partir de
+              Coût livraison
             </p>
             <p className="mt-1 text-sm font-medium text-white/84">
-              {cheapest} €
+              Selon zone et créneau
             </p>
           </div>
+        </div>
+
+        <div className="mt-3 rounded-2xl border border-white/8 bg-slate-950/20 px-4 py-3">
+          <p className="text-xs uppercase tracking-[0.2em] text-white/42">
+            Gamme
+          </p>
+          <p className="mt-1 text-sm font-medium text-white/84">
+            {product.gamme}
+          </p>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -84,4 +93,3 @@ export function ProductCard({ product, onRequestProduct }: ProductCardProps) {
     </article>
   )
 }
-
