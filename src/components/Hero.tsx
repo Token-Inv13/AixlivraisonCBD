@@ -48,37 +48,6 @@ export function Hero({ onRequestDelivery, onSeeProducts, whatsappHref }: HeroPro
         </div>
 
         <div className="grid gap-4">
-          <div className="rounded-[28px] border border-white/10 bg-white/6 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.32)] backdrop-blur-sm">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-emerald-100/55">
-                  Présentation prudente
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold text-[#f7f3e8]">
-                  Boutique partenaire envisagée
-                </h2>
-              </div>
-              <span className="rounded-full border border-[#d4b06a]/18 bg-[#d4b06a]/12 px-3 py-1 text-xs font-medium text-[#e7c88c]">
-                Confirmation manuelle
-              </span>
-            </div>
-            <div className="mt-5 space-y-3">
-              {[
-                'Produits disponibles sur demande',
-                'Disponibilité confirmée manuellement',
-                'Tarif final validé avant récupération',
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3 rounded-2xl border border-white/8 bg-slate-950/30 px-4 py-3 text-sm text-white/74"
-                >
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-200" />
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-[24px] border border-white/8 bg-[#0d1715]/88 p-4">
               <p className="text-xs uppercase tracking-[0.22em] text-white/40">
